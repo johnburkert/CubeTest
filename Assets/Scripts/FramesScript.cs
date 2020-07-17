@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class FramesScript : MonoBehaviour
 {
+    public float errorThreshold = 45f;
+    public int warningThreshold = 30;
+    
     private uint _frames;
     private float _speed;
     
@@ -59,7 +62,7 @@ public class FramesScript : MonoBehaviour
         
         var cube = GetComponent<MeshRenderer>();
   
-        while (error < 100)
+        while (true)
         {
             yield return null;
             
@@ -67,13 +70,13 @@ public class FramesScript : MonoBehaviour
             
             var speed = (y - (y < prevY ? prevY - 360f : prevY)) / Time.deltaTime;
 
-            if (speed < 45f)
+            if (speed < errorThreshold)
             {
                 error++;
             }
             else
             {
-                if (error > 0)
+                if (error > warningThreshold)
                 {
                     Debug.LogWarning($"Slowdown for {error} frames at frame {_frames - error}");
                 }
@@ -81,14 +84,12 @@ public class FramesScript : MonoBehaviour
                 error = 0;
             }
 
-            var n = 1f - Mathf.Min(1f, error / 100f);
+            var n = 1f - Mathf.Min(1f, error / errorThreshold);
 
             cube.material.color = new Color(1f, n, n);
                 
             prevY = y;
         }
-        
-        Debug.LogWarning($"Slowdown for {error} frames at frame {_frames - error}");
     }
 
     private void OnGUI()
