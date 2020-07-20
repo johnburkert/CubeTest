@@ -739,10 +739,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'The top cube is controlled by an Animation
+  m_Text: 'The top cube is rotated by an animation, the bottom by a script.
 
-    The bottom cube is controlled
-    by a Script'
+    Both
+    should be rotating at 90 degrees per second.'
 --- !u!222 &1096659320
 CanvasRenderer:
   m_ObjectHideFlags: 0
